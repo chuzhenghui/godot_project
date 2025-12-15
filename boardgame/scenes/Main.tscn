@@ -11,12 +11,12 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_c01mt")
 
-[node name="level_node" type="Node2D" parent="."]
+[node name="LevelNode" type="Node2D" parent="."]
 script = ExtResource("2_nxtc6")
 
-[node name="Level_1" parent="level_node" instance=ExtResource("1_rvslj")]
+[node name="Level_1" parent="LevelNode" instance=ExtResource("1_rvslj")]
 
-[node name="LevelUtils" parent="level_node" instance=ExtResource("6_c01mt")]
+[node name="LevelUtils" parent="LevelNode" instance=ExtResource("6_c01mt")]
 
 [node name="Dice" parent="." instance=ExtResource("5_vcsgt")]
 unique_name_in_owner = true
