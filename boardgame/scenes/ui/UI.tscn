@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm4jfpw30fypt"]
+
+[ext_resource type="Script" uid="uid://55i74rb388vg" path="res://scenes/ui/ui.gd" id="1_d2gw2"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_d2gw2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -296.0
+offset_bottom = 213.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+
+[node name="HP" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 64
+text = "HP"
+
+[node name="JB" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 64
+text = "$$"
+
+[node name="YS" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 64
+text = "$$"

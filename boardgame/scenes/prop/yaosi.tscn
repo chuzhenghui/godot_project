@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://gfm0xblvjs73"]
+
+[ext_resource type="Script" uid="uid://cjfcg5rm71uir" path="res://scenes/prop/yaosi.gd" id="1_5ib3c"]
+[ext_resource type="Texture2D" uid="uid://c2nsyp2m0q415" path="res://assets/yaosi.png" id="1_s4dml"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ib3c"]
+radius = 21.023796
+
+[node name="Yaosi" type="Area2D"]
+script = ExtResource("1_5ib3c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_s4dml")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5ib3c")

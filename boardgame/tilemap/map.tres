@@ -1,0 +1,22 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://ctm2ldmkltufa"]
+
+[ext_resource type="Texture2D" uid="uid://copntaigbkxdl" path="res://assets/bg-2.png" id="1_uo1nb"]
+[ext_resource type="Texture2D" uid="uid://dw68gdqgo8s5e" path="res://assets/bg-1.png" id="2_uo1nb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uo1nb"]
+texture = ExtResource("2_uo1nb")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_12nkc"]
+texture = ExtResource("1_uo1nb")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
+sources/10 = SubResource("TileSetAtlasSource_uo1nb")
+sources/11 = SubResource("TileSetAtlasSource_12nkc")

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://212q0md1cowy"]
+
+[ext_resource type="Script" uid="uid://ljqm07jm0ukr" path="res://scenes/prop/jinbi.gd" id="1_20nkc"]
+[ext_resource type="Texture2D" uid="uid://cqbvdwkr3evw1" path="res://assets/jinbi.png" id="2_dg4nt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k7krd"]
+radius = 22.0
+
+[node name="Jinbi" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_20nkc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dg4nt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_k7krd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

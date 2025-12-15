@@ -1,0 +1,28 @@
+[gd_scene load_steps=8 format=3 uid="uid://ricpvmmj0pof"]
+
+[ext_resource type="Script" uid="uid://b1x1ra7nw66op" path="res://scenes/main.gd" id="1_c01mt"]
+[ext_resource type="PackedScene" uid="uid://ffxkkem45i0q" path="res://scenes/level/Level_1.tscn" id="1_rvslj"]
+[ext_resource type="Script" uid="uid://dakjooy6mp550" path="res://scenes/level_node.gd" id="2_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://dtf7lm7kd7c4t" path="res://scenes/characters/Player.tscn" id="2_rvslj"]
+[ext_resource type="PackedScene" uid="uid://dm4jfpw30fypt" path="res://scenes/ui/UI.tscn" id="4_rarhs"]
+[ext_resource type="PackedScene" uid="uid://b3cif6tw3s8fm" path="res://scenes/prop/Dice.tscn" id="5_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://h23aoo8cbw8i" path="res://utils/LevelUtils.tscn" id="6_c01mt"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_c01mt")
+
+[node name="level_node" type="Node2D" parent="."]
+script = ExtResource("2_nxtc6")
+
+[node name="Level_1" parent="level_node" instance=ExtResource("1_rvslj")]
+
+[node name="LevelUtils" parent="level_node" instance=ExtResource("6_c01mt")]
+
+[node name="Player2" parent="." instance=ExtResource("2_rvslj")]
+
+[node name="Dice" parent="." instance=ExtResource("5_vcsgt")]
+unique_name_in_owner = true
+position = Vector2(1132, 826)
+scale = Vector2(10, 10)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("4_rarhs")]

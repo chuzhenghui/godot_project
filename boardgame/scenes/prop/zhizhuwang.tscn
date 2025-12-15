@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cos3ihxvpp8en"]
+
+[ext_resource type="Texture2D" uid="uid://btvfwh6mi25pd" path="res://assets/zhizhuwang.png" id="1_54tnl"]
+[ext_resource type="Script" uid="uid://cq43ihajooq4v" path="res://scenes/prop/zhizhuwang.gd" id="1_xl2oy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xl2oy"]
+radius = 24.186773
+
+[node name="Zhizhuwang" type="Area2D"]
+script = ExtResource("1_xl2oy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_54tnl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xl2oy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

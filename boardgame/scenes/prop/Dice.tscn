@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3cif6tw3s8fm"]
+
+[ext_resource type="Script" uid="uid://cr3inpu50qxrt" path="res://scenes/prop/dice.gd" id="1_fguoj"]
+[ext_resource type="SpriteFrames" uid="uid://v1uim0fd4jev" path="res://scenes/prop/Dice.tres" id="1_uoep3"]
+
+[node name="Dice" type="Node2D"]
+script = ExtResource("1_fguoj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_uoep3")
+animation = &"idle_1"
+autoplay = "idle"
+frame = 6
+frame_progress = 1.0

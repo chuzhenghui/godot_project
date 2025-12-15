@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxg214vae8si0"]
+
+[ext_resource type="Script" uid="uid://cml5wlqx8e5fh" path="res://scenes/prop/aixin.gd" id="1_5xdg3"]
+[ext_resource type="Texture2D" uid="uid://cbi5syyt5jd6g" path="res://assets/aixin.png" id="1_kdelh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xdg3"]
+radius = 25.019993
+
+[node name="Aixin" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_5xdg3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kdelh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5xdg3")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -22.5
+offset_right = 9.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "1"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

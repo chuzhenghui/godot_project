@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbci0b2dt5dqs"]
+
+[ext_resource type="Script" uid="uid://dbrxuj4i2xoji" path="res://utils/ConfirmAtionUtils.gd" id="1_okncn"]
+
+[node name="ConfirmAtionUtils" type="ConfirmationDialog"]
+oversampling_override = 1.0
+title = "请选择"
+initial_position = 1
+size = Vector2i(300, 200)
+visible = true
+dialog_text = "111111111111111111"
+script = ExtResource("1_okncn")
