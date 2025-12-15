@@ -18,11 +18,11 @@ script = ExtResource("2_nxtc6")
 
 [node name="LevelUtils" parent="level_node" instance=ExtResource("6_c01mt")]
 
-[node name="Player2" parent="." instance=ExtResource("2_rvslj")]
-
 [node name="Dice" parent="." instance=ExtResource("5_vcsgt")]
 unique_name_in_owner = true
 position = Vector2(1132, 826)
 scale = Vector2(10, 10)
+
+[node name="Player2" parent="." instance=ExtResource("2_rvslj")]
 
 [node name="CanvasLayer" parent="." instance=ExtResource("4_rarhs")]

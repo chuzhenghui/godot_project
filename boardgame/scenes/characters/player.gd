@@ -10,17 +10,18 @@ const move_speed: float = 400
 
 
 # === 回合制相关变量 ===
-@export var current_turn_direction: Vector2 = Vector2.DOWN  # 当前回合的移动方向
+@export var current_turn_direction_array: Array[Vector2]
+@export var current_turn_direction: Vector2 = Vector2.ZERO  # 当前回合的移动方向
 @export var max_moves_per_turn: int = 3  # 每回合最大移动次数
-@export var moves_left: int = 3  # 当前回合剩余移动次数
+@export var moves_left: int = 0  # 当前回合剩余移动次数
 var turn_active: bool = true     # 回合是否活跃
 
 
 # === 移动相关变量 ===
-var target_position: Vector2
-var is_moving: bool = false
-var current_grid_pos: Vector2i
-var velocity_vector: Vector2 = Vector2.ZERO
+var is_moving: bool = false # 是否可移动
+var target_position: Vector2 # 目标位置
+var current_grid_pos: Vector2i # 当前位置
+var velocity_vector: Vector2 = Vector2.ZERO # 速度向量
 
 # === 状态追踪 ===
 var moves_made_this_turn: int = 0  # 本回合已移动次数
@@ -35,14 +36,19 @@ func _ready():
 	if snap_to_grid:
 		position = grid_to_world_center(current_grid_pos)
 	
-	# 初始化回合
-	reset_turn()
-	
 	# 链接传送信号 
 	Main.teleport_position.connect(_on_teleport_position)
 	
+	# 初始化回合
+	if(moves_left == 0):
+		reset_turn()
+	
+	
 	
 func _physics_process(delta):
+	if(moves_left != 0 and current_turn_direction != Vector2.ZERO):
+		_on_next_step_direction()
+	
 	if turn_active and !is_moving:
 		handle_mouse_input()
 	elif is_moving:
@@ -57,13 +63,11 @@ func handle_mouse_input():
 		if is_adjacent_grid(current_grid_pos, target_grid_pos):
 			# 计算移动方向向量
 			var direction = calculate_direction(current_grid_pos, target_grid_pos)
-			
 			# === 回合制方向检查 ===
-			if current_turn_direction == Vector2.ZERO:
-				# 方向不同，不允许移动
-				print("本回合只能向", direction_to_string(current_turn_direction), "方向移动")
-				# 可以添加视觉反馈，比如闪烁角色或显示提示
-				show_direction_hint()
+			if current_turn_direction == Vector2.ZERO and direction in current_turn_direction_array:
+				current_turn_direction = direction
+				# 方向相同，允许移动
+				start_movement(target_grid_pos, direction)
 			elif direction == current_turn_direction:
 				# 方向相同，允许移动
 				start_movement(target_grid_pos, direction)
@@ -159,12 +163,31 @@ func handle_collision():
 
 # === 回合制功能 ===
 func reset_turn():
+	var dice_num:int = randi_range(1,6)
+	Main.execute_dice_damage(dice_num)
+	
 	# 重置回合
-	moves_left = max_moves_per_turn
+	max_moves_per_turn = dice_num
+	moves_left = dice_num
 	moves_made_this_turn = 0
+	current_turn_direction_array = []
+	current_turn_direction = Vector2.ZERO
+	if(dice_num == 1 or dice_num == 3 or dice_num == 5):
+		current_turn_direction_array.append(Vector2(1, -1))
+		current_turn_direction_array.append(Vector2(-1, -1))
+		current_turn_direction_array.append(Vector2(-1, 1))
+		current_turn_direction_array.append(Vector2(1, 1))
+	else:
+		current_turn_direction_array.append(Vector2.RIGHT)
+		current_turn_direction_array.append(Vector2.UP)
+		current_turn_direction_array.append(Vector2.LEFT)
+		current_turn_direction_array.append(Vector2.DOWN)
+	
+	
 	turn_active = true
-	print("新回合开始！移动次数: ", moves_left)
+	print("新回合开始！移动次数: ", dice_num)
 	print("新回合开始！移动方向: ", current_turn_direction)
+	print("新回合开始！移动方向: ", current_turn_direction_array)
 
 func end_turn():
 	# 结束当前回合
@@ -174,8 +197,8 @@ func end_turn():
 	# 等待一段时间或触发其他事件后开始新回合
 	# 这里可以添加结束回合的动画或效果
 	
-	# 示例：2秒后自动开始新回合
-	await get_tree().create_timer(2.0).timeout
+	# 示例：1秒后自动开始新回合
+	await get_tree().create_timer(1.0).timeout
 	reset_turn()
 
 func manually_end_turn():
@@ -223,27 +246,27 @@ func show_direction_hint():
 # === 原有函数保持不变 ===
 func calculate_direction(current: Vector2i, target: Vector2i) -> Vector2:
 	# 计算8方向移动向量
-	var diff = target - current
-	
+	var diff:Vector2i = target - current
+	return diff;
 	# 返回对应的8方向向量
-	if diff == Vector2i(1, 0):    # 右
-		return Vector2.RIGHT
-	elif diff == Vector2i(1, -1): # 右上
-		return Vector2(1, -1).normalized()
-	elif diff == Vector2i(0, -1): # 上
-		return Vector2.UP
-	elif diff == Vector2i(-1, -1): # 左上
-		return Vector2(-1, -1).normalized()
-	elif diff == Vector2i(-1, 0): # 左
-		return Vector2.LEFT
-	elif diff == Vector2i(-1, 1): # 左下
-		return Vector2(-1, 1).normalized()
-	elif diff == Vector2i(0, 1):  # 下
-		return Vector2.DOWN
-	elif diff == Vector2i(1, 1):  # 右下
-		return Vector2(1, 1).normalized()
-	
-	return Vector2.ZERO
+	#if diff == Vector2i(1, 0):    # 右
+		#return Vector2.RIGHT
+	#elif diff == Vector2i(1, -1): # 右上
+		#return Vector2(1, -1).normalized()
+	#elif diff == Vector2i(0, -1): # 上
+		#return Vector2.UP
+	#elif diff == Vector2i(-1, -1): # 左上
+		#return Vector2(-1, -1).normalized()
+	#elif diff == Vector2i(-1, 0): # 左
+		#return Vector2.LEFT
+	#elif diff == Vector2i(-1, 1): # 左下
+		#return Vector2(-1, 1).normalized()
+	#elif diff == Vector2i(0, 1):  # 下
+		#return Vector2.DOWN
+	#elif diff == Vector2i(1, 1):  # 右下
+		#return Vector2(1, 1).normalized()
+	#
+	#return Vector2.ZERO
 
 func world_to_grid(world_pos: Vector2) -> Vector2i:
 	# 将世界坐标转换为网格坐标
@@ -261,15 +284,99 @@ func is_adjacent_grid(current: Vector2i, target: Vector2i) -> bool:
 	# 8方向相邻：dx和dy都 <= 1 且不同时为0
 	return dx <= 1 and dy <= 1 and (dx != 0 or dy != 0)
 
+func _on_next_step_direction() -> void:	
+		var next_step_direction:Vector2i = current_grid_pos + Vector2i(current_turn_direction)
+		if(next_step_direction in Main.tile_map_array):
+			print('改变移动方向')
+			current_turn_direction_array = []
+			# 返回对应的8方向向量
+			if Vector2i(current_turn_direction) == Vector2i(1, 0):    # 右 Vector2.RIGHT
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.UP)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
+				
+				print(next_step_direction1)
+				print(next_step_direction2)
+				
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.UP)
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.DOWN)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2.LEFT)
+			elif Vector2i(current_turn_direction) == Vector2i(1, -1): # 右上 Vector2(1, -1)
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(1, 1))
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, 1)) # 右下 Vector2(1, 1)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2(-1, 1)) # 左下 Vector2(-1, 1)
+			elif Vector2i(current_turn_direction) == Vector2i(0, -1): # 上 Vector2.UP
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.LEFT)
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.RIGHT)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2.DOWN)
+			elif Vector2i(current_turn_direction) == Vector2i(-1, -1): # 左上 Vector2(-1, -1)
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(-1, 1))
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(-1, 1)) # 左下 Vector2(-1, 1)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2(1, 1)) # 右下 Vector2(1, 1)
+			elif Vector2i(current_turn_direction) == Vector2i(-1, 0): # 左 Vector2.LEFT
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.UP)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.UP)
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.DOWN)
+					
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2.RIGHT)
+			elif Vector2i(current_turn_direction) == Vector2i(-1, 1): # 左下 Vector2(-1, 1)
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(-1, -1))
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(-1, -1)) # 左上 Vector2(-1, -1)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2(1, -1)) # 右上 Vector2(1, -1)
+			elif Vector2i(current_turn_direction) == Vector2i(0, 1):  # 下 Vector2.DOWN
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.LEFT)
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.RIGHT)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2.UP)
+			elif Vector2i(current_turn_direction) == Vector2i(1, 1):  # 右下 Vector2(1, 1)
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(1, -1))
+				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, -1)) # 右上 Vector2(1, -1)
+				
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2(-1, -1))	 # 左上 Vector2(-1, -1)
+					
+			current_turn_direction = Vector2.ZERO
+			
+			
+			
 # === 添加UI控制功能 ===
 func _input(event):
 	# 添加键盘控制
-	if event.is_action_pressed("end_turn"):
-		manually_end_turn()
-	elif event.is_action_pressed("skip_turn"):
-		skip_turn()
-	elif event.is_action_pressed("reset_turn"):
-		reset_turn()
+	#if event.is_action_pressed("end_turn"):
+		#manually_end_turn()
+	#elif event.is_action_pressed("skip_turn"):
+		#skip_turn()
+	#elif event.is_action_pressed("reset_turn"):
+		#reset_turn()
+	pass
 		
 		
 func _on_teleport_position(pp :Vector2) -> void:	

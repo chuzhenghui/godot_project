@@ -1,10 +1,6 @@
 extends Node2D
 class_name main
 
-@onready var dice: Node2D = %Dice
-@onready var level_utils: level_utils = $LevelUtils
-@onready var level_node: Node2D = $level_node
-
 
 
 var HP :int = 10;
@@ -29,6 +25,10 @@ var is_teleport :bool = false
 signal switch_is_level()
 
 
+#关卡 不能行走定位集合
+var tile_map_array :Array[Vector2i] = []
+
+
 func _ready() -> void:
 	pass
 	
@@ -47,15 +47,11 @@ func ys_take_damage(num: int):
 	ys_score_changed.emit(YS)
 
 func execute_dice_damage(num: int):
+	print('骰子：' + str(num))
 	execute_dice.emit(num)
 	
 func main_switch_is_level():
 	switch_is_level.emit()
 
-	
-#func execute_dice() -> int:
-	#
-	#animated_sprite_2d.play("idle_"+str(num))
-	#
-	#return num
+
  
