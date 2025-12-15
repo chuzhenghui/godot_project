@@ -1,0 +1,13 @@
+Control
+HBoxContainer
+VBoxContainer
+TextureRect
+ColorRect
+Panel
+Label
+Node2D
+AnimatedSprite2D
+Sprite2D
+Button
+HSeparator
+MarginContainer

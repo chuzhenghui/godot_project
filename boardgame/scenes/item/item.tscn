@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdu1tryj4gsqw"]
+
+[ext_resource type="Texture2D" uid="uid://drqbcop4cbnm2" path="res://assets/icons-shadow.png" id="1_ehlc0"]
+[ext_resource type="Script" uid="uid://l2sep7el26su" path="res://scenes/item/item.gd" id="1_vijbe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8tca"]
+atlas = ExtResource("1_ehlc0")
+region = Rect2(357, 291, 24, 28)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+script = ExtResource("1_vijbe")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 1
+offset_right = 320.0
+offset_bottom = 640.0
+
+[node name="ColorRect" type="ColorRect" parent="Panel"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 630.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_w8tca")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 137.0
+grow_horizontal = 2
+
+[node name="Label1" type="Label" parent="Panel/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.15247649, 0.15247649, 0.1524764, 1)
+theme_override_font_sizes/font_size = 64
+text = "双倍药水"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Panel/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.15247649, 0.15247649, 0.1524764, 1)
+theme_override_font_sizes/font_size = 32
+text = "（双倍掷骰点数）"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Panel/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.15247649, 0.15247649, 0.1524764, 1)
+theme_override_font_sizes/font_size = 32
+text = "售价：6金币"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Panel/ColorRect"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.15247649, 0.15247649, 0.1524764, 1)
+theme_override_font_sizes/font_size = 32
+text = "点击购买"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0.28627452)
+layout_mode = 1
+offset_right = 320.0
+offset_bottom = 640.0
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi0q8k2h8x1oo"]
+
+[ext_resource type="PackedScene" uid="uid://cdu1tryj4gsqw" path="res://scenes/item/item.tscn" id="1_32gr4"]
+
+[node name="Level4" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Control" parent="." instance=ExtResource("1_32gr4")]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 660.0
+
+[node name="Control2" parent="." instance=ExtResource("1_32gr4")]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 0
+offset_left = 324.0
+offset_right = 644.0
+offset_bottom = 660.0
+
+[node name="Control3" parent="." instance=ExtResource("1_32gr4")]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 0
+offset_left = 648.0
+offset_right = 968.0
+offset_bottom = 660.0
