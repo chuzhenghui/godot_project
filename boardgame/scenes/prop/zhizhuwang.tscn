@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cq43ihajooq4v" path="res://scenes/prop/zhizhuwang.gd" id="1_xl2oy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xl2oy"]
-radius = 24.186773
+radius = 14.035668
 
 [node name="Zhizhuwang" type="Area2D"]
 script = ExtResource("1_xl2oy")

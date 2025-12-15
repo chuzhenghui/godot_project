@@ -165,6 +165,8 @@ func handle_collision():
 func reset_turn():
 	var dice_num:int = randi_range(1,6)
 	Main.execute_dice_damage(dice_num)
+	# 等待2秒后跳回
+	await get_tree().create_timer(2.0).timeout
 	
 	# 重置回合
 	max_moves_per_turn = dice_num
@@ -232,13 +234,15 @@ func direction_to_string(direction: Vector2) -> String:
 	elif direction == Vector2(1, 1).normalized():
 		return "右下"
 	return "未知"
+	
+var original_modulate = modulate
 
 func show_direction_hint():
 	# 显示方向提示（可以在这里添加视觉效果）
 	# 例如：闪烁角色颜色、显示箭头等
 	
 	# 简单的颜色闪烁示例
-	var original_modulate = modulate
+	# var original_modulate = modulate
 	modulate = Color(1, 0.5, 0.5)  # 红色闪烁
 	await get_tree().create_timer(0.2).timeout
 	modulate = original_modulate
@@ -291,80 +295,147 @@ func _on_next_step_direction() -> void:
 			current_turn_direction_array = []
 			# 返回对应的8方向向量
 			if Vector2i(current_turn_direction) == Vector2i(1, 0):    # 右 Vector2.RIGHT
+				# 上 Vector2.UP
 				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.UP)
-				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
-				
-				print(next_step_direction1)
-				print(next_step_direction2)
-				
 				if(next_step_direction1 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.UP)
+				# 下 Vector2.DOWN	
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
 				if(next_step_direction2 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.DOWN)
+				# 右 Vector2.RIGHT	
+				var next_step_direction4:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
+				if(next_step_direction4 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.RIGHT)
 				
+				# 左 Vector2.LEFT
 				if(current_turn_direction_array.size() == 0):
 					current_turn_direction_array.append(Vector2.LEFT)
 			elif Vector2i(current_turn_direction) == Vector2i(1, -1): # 右上 Vector2(1, -1)
-				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(1, 1))
+				# 左上 Vector2(-1, -1)	
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(-1, -1))
 				if(next_step_direction1 not in Main.tile_map_array):
-					current_turn_direction_array.append(Vector2(1, 1)) # 右下 Vector2(1, 1)
-				
+					current_turn_direction_array.append(Vector2(-1, -1)) 
+				# 右上 Vector2(1, -1)
+				var next_step_direction3:Vector2i = current_grid_pos + Vector2i(Vector2(1, -1))
+				if(next_step_direction3 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, -1))
+				# 右下 Vector2(1, 1)	
+				var next_step_direction4:Vector2i = current_grid_pos + Vector2i(Vector2(1, 1))
+				if(next_step_direction4 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, 1))
+					
+				# 左下 Vector2(-1, 1)
 				if(current_turn_direction_array.size() == 0):
-					current_turn_direction_array.append(Vector2(-1, 1)) # 左下 Vector2(-1, 1)
+					current_turn_direction_array.append(Vector2(-1, 1)) 
 			elif Vector2i(current_turn_direction) == Vector2i(0, -1): # 上 Vector2.UP
-				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
-				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
+				# 上 Vector2.UP
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.UP)
 				if(next_step_direction1 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.UP)
+				# 左 Vector2.LEFT	
+				var next_step_direction3:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
+				if(next_step_direction3 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.LEFT)
-				if(next_step_direction2 not in Main.tile_map_array):
+				# 右 Vector2.RIGHT	
+				var next_step_direction4:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
+				if(next_step_direction4 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.RIGHT)
-				
+					
+				# 下 Vector2.DOWN	
 				if(current_turn_direction_array.size() == 0):
 					current_turn_direction_array.append(Vector2.DOWN)
 			elif Vector2i(current_turn_direction) == Vector2i(-1, -1): # 左上 Vector2(-1, -1)
-				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(-1, 1))
+				# 左上 Vector2(-1, -1)	
+				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(-1, -1))
 				if(next_step_direction1 not in Main.tile_map_array):
-					current_turn_direction_array.append(Vector2(-1, 1)) # 左下 Vector2(-1, 1)
-				
+					current_turn_direction_array.append(Vector2(-1, -1)) 
+				# 左下 Vector2(-1, 1)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2(-1, 1))
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(-1, 1))
+				# 右上 Vector2(1, -1)
+				var next_step_direction3:Vector2i = current_grid_pos + Vector2i(Vector2(1, -1))
+				if(next_step_direction3 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, -1))
+					
+				# 右下 Vector2(1, 1)
 				if(current_turn_direction_array.size() == 0):
-					current_turn_direction_array.append(Vector2(1, 1)) # 右下 Vector2(1, 1)
+					current_turn_direction_array.append(Vector2(1, 1)) 
 			elif Vector2i(current_turn_direction) == Vector2i(-1, 0): # 左 Vector2.LEFT
+				# 上 Vector2.UP
 				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.UP)
-				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
 				if(next_step_direction1 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.UP)
+				# 下 Vector2.DOWN	
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
 				if(next_step_direction2 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.DOWN)
+				# 左 Vector2.LEFT	
+				var next_step_direction3:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
+				if(next_step_direction3 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.LEFT)
 					
+				# 右 Vector2.RIGHT	
 				if(current_turn_direction_array.size() == 0):
 					current_turn_direction_array.append(Vector2.RIGHT)
 			elif Vector2i(current_turn_direction) == Vector2i(-1, 1): # 左下 Vector2(-1, 1)
+				# 左上 Vector2(-1, -1)	
 				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(-1, -1))
 				if(next_step_direction1 not in Main.tile_map_array):
-					current_turn_direction_array.append(Vector2(-1, -1)) # 左上 Vector2(-1, -1)
-				
-				if(current_turn_direction_array.size() == 0):
-					current_turn_direction_array.append(Vector2(1, -1)) # 右上 Vector2(1, -1)
-			elif Vector2i(current_turn_direction) == Vector2i(0, 1):  # 下 Vector2.DOWN
-				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
-				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
-				if(next_step_direction1 not in Main.tile_map_array):
-					current_turn_direction_array.append(Vector2.LEFT)
+					current_turn_direction_array.append(Vector2(-1, -1)) 
+				# 左下 Vector2(-1, 1)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2(-1, 1))
 				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(-1, 1))
+				# 右下 Vector2(1, 1)	
+				var next_step_direction4:Vector2i = current_grid_pos + Vector2i(Vector2(1, 1))
+				if(next_step_direction4 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, 1))
+					
+				# 右上 Vector2(1, -1)
+				if(current_turn_direction_array.size() == 0):
+					current_turn_direction_array.append(Vector2(1, -1)) 
+			elif Vector2i(current_turn_direction) == Vector2i(0, 1):  # 下 Vector2.DOWN
+				# 下 Vector2.DOWN	
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2.DOWN)
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.DOWN)
+				# 左 Vector2.LEFT	
+				var next_step_direction3:Vector2i = current_grid_pos + Vector2i(Vector2.LEFT)
+				if(next_step_direction3 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2.LEFT)
+				# 右 Vector2.RIGHT	
+				var next_step_direction4:Vector2i = current_grid_pos + Vector2i(Vector2.RIGHT)
+				if(next_step_direction4 not in Main.tile_map_array):
 					current_turn_direction_array.append(Vector2.RIGHT)
-				
+					
+				# 上 Vector2.UP
 				if(current_turn_direction_array.size() == 0):
 					current_turn_direction_array.append(Vector2.UP)
 			elif Vector2i(current_turn_direction) == Vector2i(1, 1):  # 右下 Vector2(1, 1)
-				var next_step_direction1:Vector2i = current_grid_pos + Vector2i(Vector2(1, -1))
-				if(next_step_direction1 not in Main.tile_map_array):
-					current_turn_direction_array.append(Vector2(1, -1)) # 右上 Vector2(1, -1)
-				
+				# 左下 Vector2(-1, 1)
+				var next_step_direction2:Vector2i = current_grid_pos + Vector2i(Vector2(-1, 1))
+				if(next_step_direction2 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(-1, 1))
+				# 右上 Vector2(1, -1)
+				var next_step_direction3:Vector2i = current_grid_pos + Vector2i(Vector2(1, -1))
+				if(next_step_direction3 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, -1))
+				# 右下 Vector2(1, 1)	
+				var next_step_direction4:Vector2i = current_grid_pos + Vector2i(Vector2(1, 1))
+				if(next_step_direction4 not in Main.tile_map_array):
+					current_turn_direction_array.append(Vector2(1, 1))
+					
+				# 左上 Vector2(-1, -1)
 				if(current_turn_direction_array.size() == 0):
-					current_turn_direction_array.append(Vector2(-1, -1))	 # 左上 Vector2(-1, -1)
+					current_turn_direction_array.append(Vector2(-1, -1))	 
 					
 			current_turn_direction = Vector2.ZERO
 			
+			print("移动次数: ", moves_left)
+			print("移动方向: ", current_turn_direction)
+			print("移动方向: ", current_turn_direction_array)
 			
 			
 # === 添加UI控制功能 ===
@@ -380,7 +451,7 @@ func _input(event):
 		
 		
 func _on_teleport_position(pp :Vector2) -> void:	
-		# 确保角色初始位置对齐到网格
+	# 确保角色初始位置对齐到网格
 	position = Vector2(pp.x, pp.y)
 	current_grid_pos = world_to_grid(position)
 	

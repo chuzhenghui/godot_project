@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dljamhlxk01nc" path="res://assets/zhizhu.png" id="1_slmvb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nc5la"]
-radius = 22.090721
+radius = 14.035668
 
 [node name="Zhizhu" type="Area2D"]
 collision_layer = 4

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cbi5syyt5jd6g" path="res://assets/aixin.png" id="1_kdelh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5xdg3"]
-radius = 25.019993
+radius = 15.0
 
 [node name="Aixin" type="Area2D"]
 collision_layer = 4

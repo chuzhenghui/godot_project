@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cbci0b2dt5dqs" path="res://utils/ConfirmAtionUtils.tscn" id="3_10jer"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_38qo4"]
-radius = 27.166155
+radius = 17.0
 
 [node name="Chuangsong" type="Area2D"]
 collision_layer = 4

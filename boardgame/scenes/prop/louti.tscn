@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bg86thojn3u6s" path="res://assets/louti.png" id="1_ajvsi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_06r4k"]
-size = Vector2(46, 44.25)
+size = Vector2(28, 30)
 
 [node name="Louti" type="Area2D"]
 collision_layer = 4

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cqbvdwkr3evw1" path="res://assets/jinbi.png" id="2_dg4nt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k7krd"]
-radius = 22.0
+radius = 14.035668
 
 [node name="Jinbi" type="Area2D"]
 collision_layer = 4
