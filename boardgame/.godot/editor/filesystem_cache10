@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1765811456
+::res://::1766069862
 icon.svg::CompressedTexture2D::5429253251673128274::1765795081::1765795356::1::::<><><>0<>0<>4ad25108c39e789f0d6f4cdb80f7b2ed<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://assets/::1765804574
 aixin.png::CompressedTexture2D::4861400185669425592::1765795081::1765795356::1::::<><><>0<>0<>58a52486d16902105c4b28b16be10792<>res://.godot/imported/aixin.png-e6944233ca42aba73a150726222cef8e.ctex::
@@ -22,12 +22,14 @@ Main.tscn::PackedScene::1209874706859393653::1765804577::0::1::::<><><>0<>0<><>:
 ::res://scenes/characters/::1765800415
 player.gd::GDScript::69701296942628767::1765800209::0::1::::<>CharacterBody2D<><>0<>0<><>::
 Player.tscn::PackedScene::8505135236647265381::1765800415::0::1::::<><><>0<>0<><>::uid://8078r3wsicl::::res://scenes/characters/player.gd<>uid://bun3ilrdatdpu::::res://assets/player.png
-::res://scenes/item/::1765804543
-::res://scenes/level/::1765811456
-item.tscn::PackedScene::5026308955697804062::1765811457::0::1::::<><><>0<>0<><>::uid://drqbcop4cbnm2::::res://assets/icons-shadow.png
+::res://scenes/item/::1765813991
+item.gd::GDScript::828916365904918652::1765813991::0::1::::<>Control<><>0<>0<><>::
+item.tscn::PackedScene::5026308955697804062::1765813970::0::1::::<><><>0<>0<><>::uid://drqbcop4cbnm2::::res://assets/icons-shadow.png<>uid://l2sep7el26su::::res://scenes/item/item.gd
+::res://scenes/level/::1765813871
 Level_1.tscn::PackedScene::362680987731025602::1765801395::0::1::::<><><>0<>0<><>::uid://ctm2ldmkltufa::::res://tilemap/map.tres<>uid://b6epm2d35o15i::::res://scenes/level/tile_map_1.gd<>uid://cugp564tgtn2w::::res://scenes/prop/zhizhu.tscn<>uid://dxg214vae8si0::::res://scenes/prop/aixin.tscn<>uid://212q0md1cowy::::res://scenes/prop/jinbi.tscn<>uid://w6b24gsn4wqb::::res://scenes/prop/chuangsong.tscn<>uid://cmgqnyqoihsip::::res://scenes/prop/louti.tscn
 Level_2.tscn::PackedScene::6283042912235908138::1765795081::0::1::::<><><>0<>0<><>::uid://ctm2ldmkltufa::::res://tilemap/map.tres<>uid://cugp564tgtn2w::::res://scenes/prop/zhizhu.tscn<>uid://dxg214vae8si0::::res://scenes/prop/aixin.tscn<>uid://212q0md1cowy::::res://scenes/prop/jinbi.tscn<>uid://w6b24gsn4wqb::::res://scenes/prop/chuangsong.tscn<>uid://cmgqnyqoihsip::::res://scenes/prop/louti.tscn
 Level_3.tscn::PackedScene::783022635231467630::1765795081::0::1::::<><><>0<>0<><>::uid://ctm2ldmkltufa::::res://tilemap/map.tres<>uid://cugp564tgtn2w::::res://scenes/prop/zhizhu.tscn<>uid://dxg214vae8si0::::res://scenes/prop/aixin.tscn<>uid://212q0md1cowy::::res://scenes/prop/jinbi.tscn<>uid://w6b24gsn4wqb::::res://scenes/prop/chuangsong.tscn<>uid://cmgqnyqoihsip::::res://scenes/prop/louti.tscn
+Level_4.tscn::PackedScene::3000571847038281786::1765813871::0::1::::<><><>0<>0<><>::uid://cdu1tryj4gsqw::::res://scenes/item/item.tscn
 tile_map_1.gd::GDScript::4571465955984430204::1765795081::0::1::::<>TileMapLayer<><>0<>0<><>::
 ::res://scenes/prop/::1765804577
 aixin.gd::GDScript::5639677047149178041::1765795081::0::1::::<>Area2D<><>0<>0<><>::

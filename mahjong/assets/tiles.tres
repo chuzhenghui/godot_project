@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c742fdhvj26ru"]
+
+[ext_resource type="Texture2D" uid="uid://7gxh3r0to6lf" path="res://assets/deck_mahjong_light_0.png" id="1_8y8ej"]
+
+[resource]
+atlas = ExtResource("1_8y8ej")
+region = Rect2(330, 66, 44, 60)
